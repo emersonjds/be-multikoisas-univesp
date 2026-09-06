@@ -18,7 +18,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // Desativa o CSRF pois a API é stateless baseada em token
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Garante que o servidor não guarda sessões
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/users/**").permitAll() // Libera o GET para a vitrine pública
+                        .requestMatchers(HttpMethod.GET, "/user/**").permitAll() // Libera o GET para a vitrine pública
                         .requestMatchers("/api/auth/**").permitAll() // Libera a rota de login para a administradora
                         .anyRequest().authenticated() // Exige autenticação via JWT para qualquer outra ação (POST, PUT, DELETE)
                 )

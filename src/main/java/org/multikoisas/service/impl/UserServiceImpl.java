@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
                 .email(userEntity.getEmail())
                 .firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName())
+                .username(userEntity.getUsername())
                 .build();
     }
 

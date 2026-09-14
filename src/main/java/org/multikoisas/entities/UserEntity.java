@@ -11,21 +11,21 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", nullable = false)
+    @Column(name="\"id\"")
     private Integer id;
 
-    @Column(name="firstName")
+    @Column(name="\"firstName\"")
     private String firstName;
 
-    @Column(name="lastName")
+    @Column(name="\"lastName\"")
     private String lastName;
 
-    @Column(name="email")
+    @Column(name="\"email\"")
     private String email;
 
-    @Column(name="password")
+    @Column(name="\"password\"")
     private String password;
 
-    @Column(name="username")
+    @Column(name="\"username\"")
     private String username;
 }

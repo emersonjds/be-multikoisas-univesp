@@ -14,9 +14,9 @@ RUN mvn clean package -X -DskipTests
 FROM amazoncorretto:25-al2023-jdk
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar multikoisas-api.jar
+COPY --from=build /app/target/*.jar multikoisas-univesp.jar
 EXPOSE 8080
 
 # ENTRYPOINT blindado contra picos de memória (OOMKilled)
 # Render tem 512MB, XMX é o máximo de memória e XMS é o mínimo para JVM
-ENTRYPOINT ["java", "-Xmx415m", "-Xms250m", "-jar", "multikoisas-api.jar"]
+ENTRYPOINT ["java", "-Xmx415m", "-Xms250m", "-jar", "multikoisas-univesp.jar"]

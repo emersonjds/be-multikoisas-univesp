@@ -1,6 +1,6 @@
 version: "1.0"
 services:
   multikoisas:
-    image: multikoisasimagem
+    image: multikoisasunivesp
     ports:
       - "9090:8080"

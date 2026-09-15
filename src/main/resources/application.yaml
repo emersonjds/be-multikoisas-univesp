@@ -10,6 +10,16 @@ spring:
       maximum-pool-size: 10
       keepaliveTime: 300000 # 5 minutes
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs   # Caminho para o JSON da especificação OpenAPI
+  swagger-ui:
+    path: /swagger-ui.html   # Caminho para a interface gráfica
+    enabled: true            # Habilita o Swagger UI
+    operationsSorter: method # Ordena os endpoints por metodo (GET, POST, etc.)
+    tagsSorter: alpha        # Ordena os grupos de tags em ordem alfabética
+
+
   jpa:
     hibernate:
       ddl-auto: validate

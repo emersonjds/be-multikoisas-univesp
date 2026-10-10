@@ -7,6 +7,7 @@ import lombok.*;
 
 public class UserRequest {
 
+    private Integer id;
     private String email;
     private String password;
     private String firstName;

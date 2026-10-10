@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SocialNetworkService
+public class SocialNetworkServiceImpl
 {
 
     private SocialNetworkRepository socialNetworkRepository;
 
-    public SocialNetworkService(SocialNetworkRepository socialNetworkRepository) {
+    public SocialNetworkServiceImpl(SocialNetworkRepository socialNetworkRepository) {
         this.socialNetworkRepository = socialNetworkRepository;
     }
 

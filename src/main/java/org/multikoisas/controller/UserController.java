@@ -1,28 +1,23 @@
 package org.multikoisas.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.multikoisas.dto.UserRequest;
 import org.multikoisas.dto.UserResponse;
 import org.multikoisas.repository.UserRepository;
 import org.multikoisas.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 
 public class UserController {
 
-    private UserService userService;
-
-    public UserController(UserService userService){
-        this.userService = userService;
-    };
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUser(){
@@ -31,8 +26,20 @@ public class UserController {
     }
 
     @GetMapping(params = "id")
-    public ResponseEntity<UserRequest> getUserById(@RequestParam("id") Integer id){
-        UserRequest request =  userService.findById(id);
-        return request == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(request);
+    public ResponseEntity<UserResponse> getUserById(@RequestParam("id") Integer id){
+        UserResponse response =  userService.findById(id);
+        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response);
     }
+
+//    @PostMapping
+//    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest){
+//        UserResponse response = userService.save(userRequest);
+//        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response);
+//    }
+//
+//    @DeleteMapping(params = "userName")
+//    public ResponseEntity<UserResponse> deleteUser(@RequestParam("userName") String userName){
+//        UserResponse response = userService.delete(userName);
+//        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response);
+//    }
 }

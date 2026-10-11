@@ -2,14 +2,18 @@ package org.multikoisas.dto;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class UserResponse {
 
+    private Integer id;
     private String email;
     private String firstName;
     private String lastName;
-    private String username;
+    private String userName;
 
 }

@@ -5,7 +5,9 @@ import org.multikoisas.entities.UserEntity;
 import org.multikoisas.repository.UserRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,14 +16,17 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
+
 public class UserRepositoryJdbcImpl implements UserRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_ALL = "SELECT * FROM public.\"usuario\"";
+    private static final String SELECT_ALL = "SELECT id, \"firstName\", \"lastName\", \"email\", \"password\", \"userName\" FROM public.usuario";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id = :id";
-    private static final String INSERT = "INSERT INTO public.\"usuario\" (id, firstName, lastName, email, password, userName) VALUES (:id, :firstName, :lastName, :email, :password, :userName)";
-    private static final String DELETE = "DELETE FROM public.\"usuario\" WHERE id = :id";
+    private static final String SELECT_BY_EMAIL = SELECT_ALL + " WHERE \"email\" = :email LIMIT 1";
+    private static final String SELECT_BY_USERNAME = SELECT_ALL + " WHERE \"userName\" = :userName LIMIT 1";
+    private static final String INSERT = "INSERT INTO public.usuario (\"firstName\", \"lastName\", \"email\", \"password\", \"userName\") VALUES (:firstName, :lastName, :email, :password, :userName)";
+    private static final String DELETE_BY_ID = "DELETE FROM public.usuario WHERE id = :id";;
 
     private final RowMapper<UserEntity> ROW_MAPPER = (rs, rowNum) -> {
 
@@ -31,7 +36,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
         userEntity.setLastName(rs.getString("lastName"));
         userEntity.setEmail(rs.getString("email"));
         userEntity.setPassword(rs.getString("password"));
-        userEntity.setUsername(rs.getString("userName"));
+        userEntity.setUserName(rs.getString("userName"));
 
         return userEntity;
 
@@ -60,13 +65,48 @@ public class UserRepositoryJdbcImpl implements UserRepository {
         }
     }
 
-    @Override
-    public UserEntity save(String email) {
-        return null;
-    }
-
-    @Override
-    public UserEntity delete(Integer id) {
-        return null;
-    }
+//    @Override
+//    public Optional<UserEntity> findByEmail(String email) {
+//
+//        String SELECT_BY_EMAIL = SELECT_ALL + " WHERE \"email\" = :email";
+//
+//        List<UserEntity> resultados = jdbcTemplate.query(SELECT_BY_EMAIL, Map.of("email", email), ROW_MAPPER);
+//
+//        return resultados.isEmpty() ? Optional.empty() : Optional.of(resultados.get(0));
+//
+//    }
+//
+//    @Override
+//    public Optional<UserEntity> findByUsername(String userName) {
+//
+//        List<UserEntity> resultados = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
+//
+//        return resultados.isEmpty() ? Optional.empty() : Optional.of(resultados.get(0));
+//    }
+//
+//    @Override
+//    public UserEntity save(UserEntity entity) {
+//        // 1. Preparamos o SQL correto para inserção
+//        String INSERT_USER = INSERT + " RETURNING id";
+//
+//        // 2. Lemos todos os atributos do usuário (que vieram preenchidos do POST)
+//        SqlParameterSource params = new BeanPropertySqlParameterSource(entity);
+//
+//        // 3. Executamos o INSERT de fato e aguardamos o ID gerado como retorno
+//        Integer generatedId = jdbcTemplate.queryForObject(INSERT_USER, params, Integer.class);
+//
+//        // 4. Injetamos o ID no objeto e o devolvemos
+//        entity.setId(generatedId);
+//
+//        return entity;
+//    }
+//
+//    @Override
+//    public UserEntity delete(String userName) {
+//        //captura o do id do usuario a ser deletado
+//        UserEntity entity = jdbcTemplate.queryForObject(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
+//
+//        //retorna o delete do usuario com base no id capturado
+//        return jdbcTemplate.queryForObject(DELETE_BY_ID, Map.of("id", entity.getId()), ROW_MAPPER);
+//    }
 }

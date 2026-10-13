@@ -19,12 +19,39 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Garante que o servidor não guarda sessões
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                HttpMethod.PUT,
+                                "/error",
+                                "/user",
+                                "/user/**",
+                                "/socialnetwork",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html").permitAll()
+                        .requestMatchers(
                                 HttpMethod.GET,
+                                "/error",
                                 "/user",
                                 "/user/**",
                                 "/ping",
                                 "/ping/**",
                                 "/socialnetwork",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html").permitAll()
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/error",
+                                "/user",
+                                "/user/**",
+                                "/socialnetwork",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html").permitAll()
+                        .requestMatchers(
+                                HttpMethod.DELETE,
+                                "/error",
+                                "/user",
+                                "/user/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll() // Libera o GET para a vitrine pública

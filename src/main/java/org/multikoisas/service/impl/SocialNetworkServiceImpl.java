@@ -3,17 +3,17 @@ package org.multikoisas.service.impl;
 import org.multikoisas.dto.SocialNetworkResponse;
 import org.multikoisas.entities.SocialNetworkEntity;
 import org.multikoisas.repository.SocialNetworkRepository;
+import org.multikoisas.service.SocialNetworkService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SocialNetworkService
-{
+public class SocialNetworkServiceImpl implements SocialNetworkService {
 
     private SocialNetworkRepository socialNetworkRepository;
 
-    public SocialNetworkService(SocialNetworkRepository socialNetworkRepository) {
+    public SocialNetworkServiceImpl(SocialNetworkRepository socialNetworkRepository) {
         this.socialNetworkRepository = socialNetworkRepository;
     }
 
@@ -27,6 +27,7 @@ public class SocialNetworkService
 
     }
 
+    @Override
     public List<SocialNetworkResponse> findAll() {
         return socialNetworkRepository.findAll().stream()
                 .map(this::toResponse)

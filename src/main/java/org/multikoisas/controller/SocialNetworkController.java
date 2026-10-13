@@ -1,7 +1,7 @@
 package org.multikoisas.controller;
 
 import org.multikoisas.dto.SocialNetworkResponse;
-import org.multikoisas.service.impl.SocialNetworkService;
+import org.multikoisas.service.impl.SocialNetworkServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,17 +14,17 @@ import java.util.List;
 
 public class SocialNetworkController {
 
-    private SocialNetworkService socialNetworkService;
+    private SocialNetworkServiceImpl socialNetworkServiceImpl;
 
-    public SocialNetworkController(SocialNetworkService socialNetworkService)
+    public SocialNetworkController(SocialNetworkServiceImpl socialNetworkServiceImpl)
     {
-        this.socialNetworkService = socialNetworkService;
+        this.socialNetworkServiceImpl = socialNetworkServiceImpl;
     };
 
     @GetMapping
     public ResponseEntity<List<SocialNetworkResponse>> getSocialNetwork()
     {
-        List<SocialNetworkResponse> socialNetworks = socialNetworkService.findAll();
+        List<SocialNetworkResponse> socialNetworks = socialNetworkServiceImpl.findAll();
         return ResponseEntity.ok(socialNetworks);
     }
 }

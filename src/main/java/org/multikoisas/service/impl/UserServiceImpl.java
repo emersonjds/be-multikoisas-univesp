@@ -32,14 +32,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse findByUserName(String userName) {
-        return userRepository.findByUserName(userName).map(this::toResponse).orElse(null);
+    public UserResponse findByUsername(String username) {
+        return userRepository.findByUsername(username).map(this::toResponse).orElse(null);
     }
 
     @Override
     public UserResponse save(UserRequest request) {
 
-        userRepository.findByUserName(request.getUserName()).ifPresent(user -> {
+        userRepository.findByUsername(request.getUsername()).ifPresent(user -> {
             throw new IllegalArgumentException("Este nome de usuário já está em uso.");
         });
 
@@ -57,9 +57,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse delete(String userName) {
+    public UserResponse delete(String username) {
 
-        UserEntity entityDeleted = userRepository.delete(userName);
+        UserEntity entityDeleted = userRepository.delete(username);
 
         if (entityDeleted == null) {
             return null;
@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse update(String userName, UserRequest request) {
+    public UserResponse update(String username, UserRequest request) {
 
-        UserEntity userToUpdate = userRepository.findByUserName(userName)
+        UserEntity userToUpdate = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado.")); // 1. Lança erro se não achar
 
         // 2. A Mágica Funcional: Mescla limpa e direta
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
                 .email(userEntity.getEmail())
                 .firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName())
-                .userName(userEntity.getUserName())
+                .username(userEntity.getUsername())
                 .build();
     }
 
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
                 .password(request.getPassword())
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
-                .userName(request.getUserName())
+                .username(request.getUsername())
                 .build();
     }
 

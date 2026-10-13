@@ -1,6 +1,5 @@
 package org.multikoisas.repository;
 
-import org.multikoisas.dto.UserRequest;
 import org.multikoisas.entities.UserEntity;
 import org.springframework.stereotype.Repository;
 
@@ -17,11 +16,11 @@ public interface UserRepository {
 
     Optional<UserEntity> findByEmail(String email);
 
-    Optional<UserEntity> findByUserName(String userName);
+    Optional<UserEntity> findByUsername(String username);
 
     UserEntity save(UserEntity entity);
 
-    UserEntity delete(String userName);
+    UserEntity delete(String username);
 
     void update(UserEntity entity);
 

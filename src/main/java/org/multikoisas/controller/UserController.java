@@ -34,35 +34,37 @@ public class UserController {
         return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{userName}")
-    public ResponseEntity<UserResponse> getUserByUserName(@PathVariable String userName){
-        UserResponse response =  userService.findByUserName(userName);
+    @GetMapping("/{username}")
+    public ResponseEntity<UserResponse> getUserByUsername(@PathVariable String username){
+        UserResponse response =  userService.findByUsername(username);
         return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response);
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request){
 
-        UserResponse response = userService.save(request);
+        // UserResponse response = userService.save(request); //caso queira o retorno do response
         // return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
+        userService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();// retorna o 201 Created com o usuário criado
     }
 
-    @DeleteMapping("/{userName}")
-    public ResponseEntity<Object> deleteUser(@PathVariable String userName){
-        UserResponse response = userService.delete(userName);
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Object> deleteUser(@PathVariable String username){
+        UserResponse response = userService.delete(username);
 
         //return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response); // retorna o 200 OK com o usuário deletado
 
-        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(Map.of("message", "Usuario " + userName + " deletado com sucesso."));
+        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(Map.of("message", "Usuario " + username + " deletado com sucesso."));
     }
 
-    @PutMapping("/{userName}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable String userName, @RequestBody UserRequest request) {
+    @PutMapping("/{username}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable String username, @RequestBody UserRequest request) {
 
-        UserResponse response = userService.update(userName, request);
+        UserResponse response = userService.update(username, request);
 
-        // Se o Service devolveu null, o usuário não existe. Senão, devolve 200 OK com os dados novos.
+        // Se o Service devolveu null, o usuário não existe. Senão, devolve 200 com os dados novos.
         return response == null
                 ? ResponseEntity.notFound().build()
                 : ResponseEntity.ok(response);

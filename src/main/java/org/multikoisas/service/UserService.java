@@ -7,16 +7,16 @@ import java.util.List;
 
 public interface UserService {
 
-    public List<UserResponse> findAll();
+    List<UserResponse> findAll();
 
-    public UserResponse findById(Integer id);
+    UserResponse findById(Integer id);
 
-    public UserResponse findByUserName(String userName);
+    UserResponse findByUsername(String username);
 
-    public UserResponse save(UserRequest request);
+    UserResponse save(UserRequest request);
 
-    public UserResponse delete(String userName);
+    UserResponse delete(String username);
 
-    public UserResponse update(String userName, UserRequest request);
+    UserResponse update(String username, UserRequest request);
 
 }

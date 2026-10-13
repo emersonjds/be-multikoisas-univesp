@@ -19,6 +19,6 @@ public class UserRequest {
     private String firstName;
     private String lastName;
     @NotBlank(message = "o nome de usuário é obrigatório")
-    private String userName;
+    private String username;
 
 }

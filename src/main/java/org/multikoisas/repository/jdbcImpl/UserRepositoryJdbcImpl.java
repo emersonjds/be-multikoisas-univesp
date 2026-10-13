@@ -21,13 +21,13 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_ALL = "SELECT id, \"firstName\", \"lastName\", \"email\", \"password\", \"userName\" FROM public.usuario";
+    private static final String SELECT_ALL = "SELECT id, \"firstName\", \"lastName\", \"email\", \"password\", \"username\" FROM public.usuario";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id = :id";
-    private static final String UPDATE_USER = "UPDATE public.usuario SET \"firstName\" = :firstName, \"lastName\" = :lastName, \"email\" = :email, \"password\" = :password WHERE \"userName\" = :userName";
-    private static final String SELECT_BY_USERNAME = SELECT_ALL + " WHERE \"userName\" = :userName";
-    private static final String INSERT = "INSERT INTO public.usuario (\"firstName\", \"lastName\", \"email\", \"password\", \"userName\") VALUES (:firstName, :lastName, :email, :password, :userName)";
+    private static final String UPDATE_USER = "UPDATE public.usuario SET \"firstName\" = :firstName, \"lastName\" = :lastName, \"email\" = :email, \"password\" = :password WHERE \"username\" = :username";
+    private static final String SELECT_BY_USERNAME = SELECT_ALL + " WHERE \"username\" = :username";
+    private static final String INSERT = "INSERT INTO public.usuario (\"firstName\", \"lastName\", \"email\", \"password\", \"username\") VALUES (:firstName, :lastName, :email, :password, :username)";
     private static final String DELETE_BY_ID = "DELETE FROM public.usuario WHERE id = :id";
-    ;
+
 
     private final RowMapper<UserEntity> ROW_MAPPER = (rs, rowNum) -> {
 
@@ -37,7 +37,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
         userEntity.setLastName(rs.getString("lastName"));
         userEntity.setEmail(rs.getString("email"));
         userEntity.setPassword(rs.getString("password"));
-        userEntity.setUserName(rs.getString("userName"));
+        userEntity.setUsername(rs.getString("username"));
 
         return userEntity;
 
@@ -78,9 +78,9 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     }
 
     @Override
-    public Optional<UserEntity> findByUserName(String userName) {
+    public Optional<UserEntity> findByUsername(String username) {
 
-        List<UserEntity> result = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
+        List<UserEntity> result = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("username", username), ROW_MAPPER);
 
         return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
     }
@@ -103,9 +103,9 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     }
 
     @Override
-    public UserEntity delete(String userName) {
+    public UserEntity delete(String username) {
         //captura o do id do usuario a ser deletado
-        List<UserEntity> entity = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
+        List<UserEntity> entity = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("username", username), ROW_MAPPER);
 
         //verifica se o usuario existe
         if (entity.isEmpty()) {

@@ -24,7 +24,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     private static final String SELECT_ALL = "SELECT id, \"firstName\", \"lastName\", \"email\", \"password\", \"userName\" FROM public.usuario";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id = :id";
     private static final String UPDATE_USER = "UPDATE public.usuario SET \"firstName\" = :firstName, \"lastName\" = :lastName, \"email\" = :email, \"password\" = :password WHERE \"userName\" = :userName";
-    private static final String SELECT_BY_USERNAME = SELECT_ALL + " WHERE \"userName\" = :userName LIMIT 1";
+    private static final String SELECT_BY_USERNAME = SELECT_ALL + " WHERE \"userName\" = :userName";
     private static final String INSERT = "INSERT INTO public.usuario (\"firstName\", \"lastName\", \"email\", \"password\", \"userName\") VALUES (:firstName, :lastName, :email, :password, :userName)";
     private static final String DELETE_BY_ID = "DELETE FROM public.usuario WHERE id = :id";
     ;

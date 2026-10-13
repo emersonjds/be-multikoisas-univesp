@@ -23,10 +23,11 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 
     private static final String SELECT_ALL = "SELECT id, \"firstName\", \"lastName\", \"email\", \"password\", \"userName\" FROM public.usuario";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id = :id";
-    private static final String SELECT_BY_EMAIL = SELECT_ALL + " WHERE \"email\" = :email LIMIT 1";
+    private static final String UPDATE_USER = "UPDATE public.usuario SET \"firstName\" = :firstName, \"lastName\" = :lastName, \"email\" = :email, \"password\" = :password WHERE \"userName\" = :userName";
     private static final String SELECT_BY_USERNAME = SELECT_ALL + " WHERE \"userName\" = :userName LIMIT 1";
     private static final String INSERT = "INSERT INTO public.usuario (\"firstName\", \"lastName\", \"email\", \"password\", \"userName\") VALUES (:firstName, :lastName, :email, :password, :userName)";
-    private static final String DELETE_BY_ID = "DELETE FROM public.usuario WHERE id = :id";;
+    private static final String DELETE_BY_ID = "DELETE FROM public.usuario WHERE id = :id";
+    ;
 
     private final RowMapper<UserEntity> ROW_MAPPER = (rs, rowNum) -> {
 
@@ -54,9 +55,9 @@ public class UserRepositoryJdbcImpl implements UserRepository {
 
         try {
 
-            UserEntity user = jdbcTemplate.queryForObject(SELECT_BY_ID,Map.of("id", id), ROW_MAPPER);
+            UserEntity result = jdbcTemplate.queryForObject(SELECT_BY_ID, Map.of("id", id), ROW_MAPPER);
 
-            return Optional.of(user);
+            return Optional.of(result);
 
         } catch (EmptyResultDataAccessException e) {
 
@@ -65,48 +66,64 @@ public class UserRepositoryJdbcImpl implements UserRepository {
         }
     }
 
-//    @Override
-//    public Optional<UserEntity> findByEmail(String email) {
-//
-//        String SELECT_BY_EMAIL = SELECT_ALL + " WHERE \"email\" = :email";
-//
-//        List<UserEntity> resultados = jdbcTemplate.query(SELECT_BY_EMAIL, Map.of("email", email), ROW_MAPPER);
-//
-//        return resultados.isEmpty() ? Optional.empty() : Optional.of(resultados.get(0));
-//
-//    }
-//
-//    @Override
-//    public Optional<UserEntity> findByUsername(String userName) {
-//
-//        List<UserEntity> resultados = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
-//
-//        return resultados.isEmpty() ? Optional.empty() : Optional.of(resultados.get(0));
-//    }
-//
-//    @Override
-//    public UserEntity save(UserEntity entity) {
-//        // 1. Preparamos o SQL correto para inserção
-//        String INSERT_USER = INSERT + " RETURNING id";
-//
-//        // 2. Lemos todos os atributos do usuário (que vieram preenchidos do POST)
-//        SqlParameterSource params = new BeanPropertySqlParameterSource(entity);
-//
-//        // 3. Executamos o INSERT de fato e aguardamos o ID gerado como retorno
-//        Integer generatedId = jdbcTemplate.queryForObject(INSERT_USER, params, Integer.class);
-//
-//        // 4. Injetamos o ID no objeto e o devolvemos
-//        entity.setId(generatedId);
-//
-//        return entity;
-//    }
-//
-//    @Override
-//    public UserEntity delete(String userName) {
-//        //captura o do id do usuario a ser deletado
-//        UserEntity entity = jdbcTemplate.queryForObject(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
-//
-//        //retorna o delete do usuario com base no id capturado
-//        return jdbcTemplate.queryForObject(DELETE_BY_ID, Map.of("id", entity.getId()), ROW_MAPPER);
-//    }
+    @Override
+    public Optional<UserEntity> findByEmail(String email) {
+
+        String SELECT_BY_EMAIL = SELECT_ALL + " WHERE \"email\" = :email";
+
+        List<UserEntity> result = jdbcTemplate.query(SELECT_BY_EMAIL, Map.of("email", email), ROW_MAPPER);
+
+        return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+
+    }
+
+    @Override
+    public Optional<UserEntity> findByUserName(String userName) {
+
+        List<UserEntity> result = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
+
+        return result.isEmpty() ? Optional.empty() : Optional.of(result.get(0));
+    }
+
+    @Override
+    public UserEntity save(UserEntity entity) {
+        // 1. Preparamos o SQL correto para inserção
+        String INSERT_USER = INSERT + " RETURNING id";
+
+        // 2. Lemos todos os atributos do usuário (que vieram preenchidos do POST)
+        SqlParameterSource params = new BeanPropertySqlParameterSource(entity);
+
+        // 3. Executamos o INSERT de fato e aguardamos o ID gerado como retorno
+        Integer generatedId = jdbcTemplate.queryForObject(INSERT_USER, params, Integer.class);
+
+        // 4. Injetamos o ID no objeto e o devolvemos
+        entity.setId(generatedId);
+
+        return entity;
+    }
+
+    @Override
+    public UserEntity delete(String userName) {
+        //captura o do id do usuario a ser deletado
+        List<UserEntity> entity = jdbcTemplate.query(SELECT_BY_USERNAME, Map.of("userName", userName), ROW_MAPPER);
+
+        //verifica se o usuario existe
+        if (entity.isEmpty()) {
+            return null;
+        }
+
+        UserEntity result = entity.get(0);
+
+        //retorna o delete do usuario com base no id capturado
+        jdbcTemplate.update(DELETE_BY_ID, Map.of("id", result.getId()));
+
+        return result; // retorna o usuario deletado
+    }
+
+    @Override
+    public void update(UserEntity entity) {
+        // O BeanPropertySqlParameterSource mapeia automaticamente os atributos do objeto para os :parametros do SQL
+        SqlParameterSource params = new BeanPropertySqlParameterSource(entity);
+        jdbcTemplate.update(UPDATE_USER, params);
+    }
 }

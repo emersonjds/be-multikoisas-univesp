@@ -15,12 +15,14 @@ public interface UserRepository {
 
     Optional<UserEntity> findById(Integer id);
 
-//    Optional<UserEntity> findByEmail(String email);
-//
-//    Optional<UserEntity> findByUsername(String userName);
-//
-//    UserEntity save(UserEntity entity);
-//
-//    UserEntity delete(String userName);
+    Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findByUserName(String userName);
+
+    UserEntity save(UserEntity entity);
+
+    UserEntity delete(String userName);
+
+    void update(UserEntity entity);
 
 }

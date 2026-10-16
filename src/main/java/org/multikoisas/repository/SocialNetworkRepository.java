@@ -1,11 +1,23 @@
 package org.multikoisas.repository;
 
+import org.multikoisas.dto.SocialNetworkRequest;
 import org.multikoisas.entities.SocialNetworkEntity;
-import org.springframework.stereotype.Repository;
-import java.util.List;
+import org.multikoisas.entities.UserEntity;
 
-@Repository
+import java.util.List;
+import java.util.Optional;
+
 public interface SocialNetworkRepository {
 
-     List<SocialNetworkEntity> findAll();
+    List<SocialNetworkEntity> findAll();
+
+    Optional<SocialNetworkEntity> findByName(String descricao);
+
+    SocialNetworkEntity save(SocialNetworkEntity entity);
+
+    SocialNetworkEntity delete(String descricao);
+
+    void update(SocialNetworkEntity entity);
+
+
 }

@@ -1,5 +1,6 @@
 package org.multikoisas.repository.jdbcImpl;
 
+
 import lombok.RequiredArgsConstructor;
 import org.multikoisas.entities.CanalVendaProdutoEntity;
 import org.multikoisas.repository.CanalVendaProdutoRepository;

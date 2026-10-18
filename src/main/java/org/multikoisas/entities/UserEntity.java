@@ -8,7 +8,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-
 public class UserEntity {
 
     private Integer id;

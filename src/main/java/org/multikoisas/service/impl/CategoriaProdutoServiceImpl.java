@@ -13,7 +13,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class CategoriaProdutoServiceImpl implements CategoriaProdutoService {
 
     private final CategoriaProdutoRepository repository;

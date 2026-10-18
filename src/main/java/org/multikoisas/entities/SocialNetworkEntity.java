@@ -7,7 +7,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-
 public class SocialNetworkEntity
 {
     private Integer id;

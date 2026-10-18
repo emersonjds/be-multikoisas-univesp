@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
-
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;

@@ -13,10 +13,9 @@ import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
-
 public class SocialNetworkServiceImpl implements SocialNetworkService {
 
-        private final SocialNetworkRepository socialRepository;
+    private final SocialNetworkRepository socialRepository;
 
     public List<SocialNetworkResponse> findAll() {
         return socialRepository.findAll().stream()

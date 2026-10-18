@@ -1,5 +1,6 @@
 package org.multikoisas.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.multikoisas.dto.CanalVendaProdutoResponse;
 import org.multikoisas.entities.CanalVendaProdutoEntity;
 import org.multikoisas.repository.CanalVendaProdutoRepository;
@@ -9,14 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CanalVendaProdutoServiceImpl implements CanalVendaProdutoService {
 
     private final CanalVendaProdutoRepository canalVendaProdutoRepository;
-
-    public CanalVendaProdutoServiceImpl(
-            CanalVendaProdutoRepository canalVendaProdutoRepository) {
-        this.canalVendaProdutoRepository = canalVendaProdutoRepository;
-    }
 
     private CanalVendaProdutoResponse toResponse(
             CanalVendaProdutoEntity canalVendaProdutoEntity) {

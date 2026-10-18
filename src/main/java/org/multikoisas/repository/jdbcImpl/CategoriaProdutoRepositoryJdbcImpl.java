@@ -22,11 +22,9 @@ public class CategoriaProdutoRepositoryJdbcImpl implements CategoriaProdutoRepos
     private static final String VERIFY = "SELECT COUNT(*) FROM public.\"categoriaProduto\" WHERE \"categoriaId\" = :categoriaId AND \"produtoId\" = :produtoId";
 
     private final RowMapper<CategoriaProdutoEntity> ROW_MAPPER = (rs, rowNum) -> {
-
         CategoriaProdutoEntity categoriaProdutoEntity = new CategoriaProdutoEntity();
         categoriaProdutoEntity.setCategoriaId(rs.getInt("categoriaId"));
         categoriaProdutoEntity.setProdutoId(rs.getInt("produtoId"));
-
         return categoriaProdutoEntity;
 
     };

@@ -1,5 +1,6 @@
 package org.multikoisas.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.multikoisas.dto.CategoriaResponse;
 import org.multikoisas.entities.CategoriaEntity;
 import org.multikoisas.repository.CategoriaRepository;
@@ -9,13 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CategoriaServiceImpl implements CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
-
-    public CategoriaServiceImpl(CategoriaRepository categoriaRepository) {
-        this.categoriaRepository = categoriaRepository;
-    }
 
     private CategoriaResponse toResponse(CategoriaEntity categoriaEntity) {
         return CategoriaResponse.builder()

@@ -1,5 +1,6 @@
 package org.multikoisas.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.multikoisas.dto.ProdutoResponse;
 import org.multikoisas.entities.ProdutoEntity;
 import org.multikoisas.repository.ProdutoRepository;
@@ -9,13 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
-
-    public ProdutoServiceImpl(ProdutoRepository produtoRepository) {
-        this.produtoRepository = produtoRepository;
-    }
 
     private ProdutoResponse toResponse(ProdutoEntity produtoEntity) {
         return ProdutoResponse.builder()

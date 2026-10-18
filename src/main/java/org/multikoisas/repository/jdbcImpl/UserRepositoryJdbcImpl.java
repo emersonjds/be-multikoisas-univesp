@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-
 public class UserRepositoryJdbcImpl implements UserRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;

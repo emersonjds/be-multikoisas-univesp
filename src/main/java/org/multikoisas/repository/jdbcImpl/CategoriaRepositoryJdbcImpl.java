@@ -29,4 +29,6 @@ public class CategoriaRepositoryJdbcImpl implements CategoriaRepository {
     public List<CategoriaEntity> findAll() {
         return jdbcTemplate.query(SELECT_ALL, ROW_MAPPER);
     }
+
+
 }

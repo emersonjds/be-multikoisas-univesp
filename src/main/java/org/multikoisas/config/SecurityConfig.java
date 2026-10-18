@@ -21,37 +21,36 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.PUT,
                                 "/error",
-                                "/user",
                                 "/user/**",
-                                "/socialnetwork",
+                                "/socialnetwork/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/error",
-                                "/user",
                                 "/user/**",
-                                "/ping",
                                 "/ping/**",
-                                "/socialnetwork",
+                                "/socialnetwork/**",
+                                "/categoriaproduto/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/error",
-                                "/user",
                                 "/user/**",
-                                "/socialnetwork",
+                                "/socialnetwork/**",
+                                "/categoriaproduto/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers(
                                 HttpMethod.DELETE,
                                 "/error",
-                                "/user",
                                 "/user/**",
+                                "/socialnetwork/**",
+                                "/categoriaproduto/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll() // Libera o GET para a vitrine pública

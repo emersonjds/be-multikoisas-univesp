@@ -1,9 +1,7 @@
 package org.multikoisas.repository.jdbcImpl;
 
 import lombok.RequiredArgsConstructor;
-import org.multikoisas.dto.SocialNetworkRequest;
 import org.multikoisas.entities.SocialNetworkEntity;
-import org.multikoisas.entities.UserEntity;
 import org.multikoisas.repository.SocialNetworkRepository;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;

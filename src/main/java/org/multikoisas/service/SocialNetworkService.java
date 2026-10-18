@@ -2,7 +2,6 @@ package org.multikoisas.service;
 
 import org.multikoisas.dto.SocialNetworkRequest;
 import org.multikoisas.dto.SocialNetworkResponse;
-import org.multikoisas.dto.UserResponse;
 
 import java.util.List;
 

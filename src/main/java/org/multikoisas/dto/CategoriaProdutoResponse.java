@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class CategoriaProdutoResponse {
 
-    private Integer categoriaId;
     private Integer produtoId;
+    private Integer categoriaId;
+
 }

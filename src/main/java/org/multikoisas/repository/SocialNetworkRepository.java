@@ -1,8 +1,6 @@
 package org.multikoisas.repository;
 
-import org.multikoisas.dto.SocialNetworkRequest;
 import org.multikoisas.entities.SocialNetworkEntity;
-import org.multikoisas.entities.UserEntity;
 
 import java.util.List;
 import java.util.Optional;

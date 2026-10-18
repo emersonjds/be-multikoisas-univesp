@@ -24,50 +24,42 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUser(){
-        List<UserResponse> users = userService.findAll();
-        return ResponseEntity.ok(users);
+        List<UserResponse> response = userService.findAll();
+        return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
     }
 
     @GetMapping(params = "id")
     public ResponseEntity<UserResponse> getUserById(@RequestParam("id") Integer id){
         UserResponse response =  userService.findById(id);
-        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response);
+        return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<UserResponse> getUserByUsername(@PathVariable String username){
         UserResponse response =  userService.findByUsername(username);
-        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response);
+        return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request){
-
         // UserResponse response = userService.save(request); //caso queira o retorno do response
         // return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
-        userService.save(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();// retorna o 201 Created com o usuário criado
+        UserResponse response = userService.save(request);
+        return response != null ? ResponseEntity.status(HttpStatus.CREATED).build() : ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{username}")
     public ResponseEntity<Object> deleteUser(@PathVariable String username){
         UserResponse response = userService.delete(username);
-
         //return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(response); // retorna o 200 OK com o usuário deletado
-
-        return response == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(Map.of("message", "Usuario " + username + " deletado com sucesso."));
+        return response != null ?ResponseEntity.ok(Map.of("message", "Usuario " + username + " deletado com sucesso.")) : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{username}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable String username, @RequestBody UserRequest request) {
-
         UserResponse response = userService.update(username, request);
-
-        // Se o Service devolveu null, o usuário não existe. Senão, devolve 200 com os dados novos.
-        return response == null
-                ? ResponseEntity.notFound().build()
-                : ResponseEntity.ok(response);
+        return response != null ? ResponseEntity.ok(response) : ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

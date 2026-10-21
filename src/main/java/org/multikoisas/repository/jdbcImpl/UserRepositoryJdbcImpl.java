@@ -1,6 +1,9 @@
 package org.multikoisas.repository.jdbcImpl;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.multikoisas.entities.UserEntity;
 import org.multikoisas.repository.UserRepository;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -10,9 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class UserRepositoryJdbcImpl implements UserRepository {
     private static final String DELETE_BY_ID = "DELETE FROM public.usuario WHERE id = :id";
 
 
-    private final RowMapper<UserEntity> ROW_MAPPER = (rs, rowNum) -> {
+    private static final RowMapper<UserEntity> ROW_MAPPER = (rs, rowNum) -> {
 
         UserEntity userEntity = new UserEntity();
         userEntity.setId(rs.getInt("id"));

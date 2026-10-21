@@ -1,6 +1,8 @@
 package org.multikoisas.repository.jdbcImpl;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Optional;
+
 import org.multikoisas.entities.SocialNetworkEntity;
 import org.multikoisas.repository.SocialNetworkRepository;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,8 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class SocialNetworkRepositoryJdbcImpl implements SocialNetworkRepository{
     private final static String DELETE = "DELETE FROM public.\"redesSociais\" WHERE descricao = :descricao";
     private final static String UPDATE = "UPDATE public.\"redesSociais\" SET descricao = :descricao, link = :link WHERE id = :id";
 
-    private final RowMapper<SocialNetworkEntity> ROW_MAPPER = (rs, rowNum) -> {
+    private static final RowMapper<SocialNetworkEntity> ROW_MAPPER = (rs, rowNum) -> {
         SocialNetworkEntity socialNetworkEntity = new SocialNetworkEntity();
         socialNetworkEntity.setId(rs.getInt("id"));
         socialNetworkEntity.setDescricao(rs.getString("descricao"));

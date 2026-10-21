@@ -1,6 +1,11 @@
+
 package org.multikoisas.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -9,5 +14,6 @@ import lombok.*;
 @AllArgsConstructor
 public class CanalVendaRequest {
 
+    private Integer id;
     private String nome;
 }

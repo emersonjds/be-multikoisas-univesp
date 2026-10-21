@@ -1,10 +1,20 @@
-package org.multikoisas.service;
 
-import org.multikoisas.dto.ProdutoResponse;
+package org.multikoisas.service;
 
 import java.util.List;
 
+import org.multikoisas.dto.ProdutoRequest;
+import org.multikoisas.dto.ProdutoResponse;
+
 public interface ProdutoService {
 
-    public List<ProdutoResponse> findAll();
+    List<ProdutoResponse> findAll();
+
+    ProdutoResponse findById(Integer id);
+
+    ProdutoResponse save(ProdutoRequest request);
+
+    boolean update(Integer id, ProdutoRequest request);
+
+    boolean deleteById(Integer id);
 }

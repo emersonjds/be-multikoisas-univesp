@@ -1,10 +1,20 @@
-package org.multikoisas.service;
 
-import org.multikoisas.dto.CategoriaResponse;
+package org.multikoisas.service;
 
 import java.util.List;
 
+import org.multikoisas.dto.CategoriaRequest;
+import org.multikoisas.dto.CategoriaResponse;
+
 public interface CategoriaService {
 
-    public List<CategoriaResponse> findAll();
+    List<CategoriaResponse> findAll();
+
+    CategoriaResponse findById(Integer id);
+
+    CategoriaResponse save(CategoriaRequest request);
+
+    boolean update(Integer id, CategoriaRequest request);
+
+    boolean deleteById(Integer id);
 }

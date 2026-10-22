@@ -42,6 +42,7 @@ public class SecurityConfig {
                                 "/user/**",
                                 "/socialnetwork/**",
                                 "/categoriaproduto/**",
+                                "/imagem/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll()
@@ -51,6 +52,7 @@ public class SecurityConfig {
                                 "/user/**",
                                 "/socialnetwork/**",
                                 "/categoriaproduto/**",
+                                "/imagem/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html").permitAll() // Libera o GET para a vitrine pública

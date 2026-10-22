@@ -1,0 +1,15 @@
+package org.multikoisas.entities;
+
+import lombok.*;
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+public class ProdutoImagemEntity {
+
+    private Integer id;
+    private Integer produtoId;
+    private String imagemUrl;
+}

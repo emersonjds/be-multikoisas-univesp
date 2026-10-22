@@ -1,33 +1,112 @@
 package org.multikoisas.repository.jdbcImpl;
 
-import lombok.RequiredArgsConstructor;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import org.multikoisas.entities.ProdutoEntity;
 import org.multikoisas.repository.ProdutoRepository;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-@RequiredArgsConstructor
 public class ProdutoRepositoryJdbcImpl implements ProdutoRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String SELECT_ALL = "SELECT id, \"nome\", \"descricaoProduto\" FROM public.produto";
+    public ProdutoRepositoryJdbcImpl(NamedParameterJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-    private final RowMapper<ProdutoEntity> ROW_MAPPER = (rs, rowNum) -> {
-        ProdutoEntity produtoEntity = new ProdutoEntity();
-        produtoEntity.setId(rs.getInt("id"));
-        produtoEntity.setNome(rs.getString("nome"));
-        produtoEntity.setDescricaoProduto(rs.getString("descricao_produto"));
+    private static final RowMapper<ProdutoEntity> ROW_MAPPER = (rs, rowNum) -> {
+        ProdutoEntity entity = new ProdutoEntity();
 
-        return produtoEntity;
+        entity.setId(rs.getInt("id"));
+        entity.setNome(rs.getString("nome"));
+        entity.setDescricaoProduto(rs.getString("descricaoProduto"));
+
+        return entity;
     };
 
     @Override
     public List<ProdutoEntity> findAll() {
-        return jdbcTemplate.query(SELECT_ALL, ROW_MAPPER);
+        String sql = """
+            SELECT id, nome, "descricaoProduto"
+            FROM produto
+            """;
+
+        return jdbcTemplate.query(sql, ROW_MAPPER);
+    }
+
+    @Override
+    public Optional<ProdutoEntity> findById(Integer id) {
+        String sql = """
+            SELECT id, nome, "descricaoProduto"
+            FROM produto
+            WHERE id = :id
+            """;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+
+        List<ProdutoEntity> result =
+                jdbcTemplate.query(sql, params, ROW_MAPPER);
+
+        return result.stream().findFirst();
+    }
+
+    @Override
+    public ProdutoEntity save(ProdutoEntity entity) {
+        String sql = """
+            INSERT INTO produto (nome, "descricaoProduto")
+            VALUES (:nome, :descricaoProduto)
+            RETURNING id
+            """;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("nome", entity.getNome());
+        params.put("descricaoProduto", entity.getDescricaoProduto());
+
+        Integer id = jdbcTemplate.queryForObject(
+                sql,
+                params,
+                Integer.class
+        );
+
+        entity.setId(id);
+
+        return entity;
+    }
+
+    @Override
+    public boolean update(Integer id, ProdutoEntity entity) {
+        String sql = """
+            UPDATE produto
+            SET nome = :nome,
+                "descricaoProduto" = :descricaoProduto
+            WHERE id = :id
+            """;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("nome", entity.getNome());
+        params.put("descricaoProduto", entity.getDescricaoProduto());
+
+        return jdbcTemplate.update(sql, params) > 0;
+    }
+
+    @Override
+    public boolean deleteById(Integer id) {
+        String sql = """
+            DELETE FROM produto
+            WHERE id = :id
+            """;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+
+        return jdbcTemplate.update(sql, params) > 0;
     }
 }

@@ -1,14 +1,15 @@
 package org.multikoisas.repository.jdbcImpl;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+import java.util.Map;
+
 import org.multikoisas.entities.CategoriaProdutoEntity;
 import org.multikoisas.repository.CategoriaProdutoRepository;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,7 +22,8 @@ public class CategoriaProdutoRepositoryJdbcImpl implements CategoriaProdutoRepos
     private static final String DELETE = "DELETE FROM public.\"categoriaProduto\" WHERE \"categoriaId\" = :categoriaId AND \"produtoId\" = :produtoId";
     private static final String VERIFY = "SELECT COUNT(*) FROM public.\"categoriaProduto\" WHERE \"categoriaId\" = :categoriaId AND \"produtoId\" = :produtoId";
 
-    private final RowMapper<CategoriaProdutoEntity> ROW_MAPPER = (rs, rowNum) -> {
+    private static final RowMapper<CategoriaProdutoEntity> ROW_MAPPER = (rs, rowNum) -> {
+
         CategoriaProdutoEntity categoriaProdutoEntity = new CategoriaProdutoEntity();
         categoriaProdutoEntity.setCategoriaId(rs.getInt("categoriaId"));
         categoriaProdutoEntity.setProdutoId(rs.getInt("produtoId"));

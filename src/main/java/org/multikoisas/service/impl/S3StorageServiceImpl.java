@@ -1,6 +1,7 @@
 package org.multikoisas.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.multikoisas.dto.ProdutoImagemResponse;
 import org.multikoisas.service.S3StorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,9 @@ public class S3StorageServiceImpl implements S3StorageService {
             throw new RuntimeException("Falha ao processar o fluxo do ficheiro de imagem.", e);
         }
     }
+
+    public ProdutoImagemResponse delete(Integer id, Integer productId){ return null;}
+
     private String getExtension(String filename) {
         return (filename != null && filename.contains(".")) ? filename.substring(filename.lastIndexOf(".")) : "";
     }

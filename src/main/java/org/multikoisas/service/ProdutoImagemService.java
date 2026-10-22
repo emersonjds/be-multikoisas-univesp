@@ -10,10 +10,6 @@ public interface ProdutoImagemService {
 
     ProdutoImagemResponse save(ProdutoImagemRequest request);
 
-    @Service
-    interface S3StorageService {
+    ProdutoImagemResponse delete(Integer id, Integer productId);
 
-        String uploadFile(MultipartFile multipartFile);
-
-    }
 }

@@ -6,6 +6,7 @@ import org.multikoisas.dto.ProdutoImagemResponse;
 import org.multikoisas.entities.ProdutoImagemEntity;
 import org.multikoisas.repository.ProdutoImagemRepository;
 import org.multikoisas.service.ProdutoImagemService;
+import org.multikoisas.service.S3StorageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,13 @@ public class ProdutoImagemServiceImpl implements ProdutoImagemService {
 
         // 4. Converte e devolve
         return toResponse(savedEntity);
+    }
+
+    public ProdutoImagemResponse delete(Integer id, Integer productId){
+
+        service.delete(id, productId);
+
+        return null;
     }
 
     public ProdutoImagemResponse toResponse(ProdutoImagemEntity entity) {

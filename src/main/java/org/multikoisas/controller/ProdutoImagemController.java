@@ -17,10 +17,15 @@ public class ProdutoImagemController {
     private final ProdutoImagemService service;
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public Object upload(@Valid @ModelAttribute ProdutoImagemRequest request) {
+    public ResponseEntity<ProdutoImagemResponse> upload(@Valid @ModelAttribute ProdutoImagemRequest request) {
 
         ProdutoImagemResponse response = service.save(request);
 
-        return response == null ? ResponseEntity.badRequest().build() : ResponseEntity.status(HttpStatus.CREATED).body(request);
+        if (response == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
     }
 }

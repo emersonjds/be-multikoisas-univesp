@@ -11,5 +11,5 @@ public class CanalVendaProdutoEntity {
 
     private Integer produtoId;
     private Integer canalVendaId;
-    private String link;
+    private String  link;
 }
